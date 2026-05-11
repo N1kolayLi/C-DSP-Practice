@@ -7,24 +7,27 @@ using namespace std;
  * Последовательность хранится в памяти как статический массив.
  * Размер последовательности заранее неизвестен и передается в функции как параметр.*/
 
-
-
-int main(){
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
-    //Массив
+void func_arr(){
     int n;
-    cout<<"Введите количество элементов массива"<<endl;
+    cout << "Введите количество элементов массива: ";
     scanf("%d", &n);
 
     double arr[n];
 
-        for(int i = 0; i < n; i++){
-            cout<<"Эллемент " << i << " = " <<endl;
-            scanf("%lf", &arr[i]);
-        }
-        for(int i = 0; i < n; i++){
-            cout<<arr[i]<<" "<<endl;
-        }
+    for(int i = 0; i < n; i++) {
+        cout << "Элемент " << i << " = ";
+        scanf("%lf", &arr[i]);
+    }
 
+    cout << "\nВаш массив:" << endl;
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main(){
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+    func_arr();
 }
