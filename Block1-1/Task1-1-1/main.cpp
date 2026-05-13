@@ -1,27 +1,28 @@
 #include <iostream>
 #include <windows.h>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 #define MAX_SIZE 100
 //Требуется создать набор функций.
-// привет
 /*Дана последовательность вещественных чисел произвольной длины.
  * Последовательность хранится в памяти как статический массив.
  * Размер последовательности заранее неизвестен и передается в функции как параметр.*/
 
 int size = 0;
-void func_arr(){
+void func_arr(double* arr){
     int n;
     cout << "Введите количество элементов массива: ";
     scanf("%d", &n);
     size = n;
-    double arr[n];
+
+    srand(time(NULL));
 
     for(int i = 0; i < n; i++) {
-        cout << "Элемент " << i << " = ";
-        scanf("%lf", &arr[i]);
+        arr[i] = (rand() % 201) - 100;
     }
 
-    cout << "\nВаш массив:" << endl;
+    cout << "\nСгенерированный массив:" << endl;
     for(int i = 0; i < n; i++) {
         cout << arr[i] << " ";
     }
@@ -34,7 +35,22 @@ void func_arr(){
 // или меньше (для минимума) обоих своих соседей.
 // Крайние элементы последовательности (первый и последний) экстремумами не считаются.
 void find_local_extr(const double *arr, int size){
-    cout<<size<<endl;
+    if (size < 3) {
+        cout << "Массив должен содержать больше 3-х элементов"<< endl;
+        return;
+    }
+    for (int i = 1; i < size-1; i++){
+        if (arr[i] > arr[i-1] && arr[i] > arr[i+1]){
+            cout<<"Локальный максимум: "<<arr[i]<<endl;
+            cout<<"Соседи:"<<arr[i-1]<<", "<<arr[i+1]<<endl;
+        }
+    }
+    for (int i = 1; i < size-1; i++){
+        if (arr[i] < arr[i-1] && arr[i] < arr[i+1]){
+            cout<<"Локальный минимум: "<<arr[i]<<endl;
+            cout<<"Соседи:"<<arr[i-1]<<", "<<arr[i+1]<<endl;
+        }
+    }
 }
 
 int main(){
@@ -43,8 +59,8 @@ int main(){
 
     double my_array[MAX_SIZE];
 
-    func_arr();
-    if (size > 0) {
+    func_arr(my_array);
+    if (size > 3) {
         find_local_extr(my_array, size);
     }
 return 0;
