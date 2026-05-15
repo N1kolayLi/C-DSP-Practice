@@ -4,6 +4,7 @@
 #include <ctime>
 using namespace std;
 #define MAX_SIZE 100
+#define MAX_SHIFT 100
 //Требуется создать набор функций.
 /*Дана последовательность вещественных чисел произвольной длины.
  * Последовательность хранится в памяти как статический массив.
@@ -34,6 +35,7 @@ void func_arr(double* arr){
 // Локальный экстремум — это элемент, который больше (для максимума)
 // или меньше (для минимума) обоих своих соседей.
 // Крайние элементы последовательности (первый и последний) экстремумами не считаются.
+
 void find_local_extr(const double *arr, int size){
     if (size < 3) {
         cout << "Массив должен содержать больше 3-х элементов"<< endl;
@@ -88,7 +90,36 @@ void normalize(double *arr, double *norm_arr, int size){
     cout << endl;
 }
 
-int main(){
+//Функция циклического сдвига
+//Выполните циклический переход последовательности вправо на K позиций (K задается параметром).
+// При изменении элементов, выходящих за пределы массива, перемещаются в начало.
+// Предложение должно изменить исходный массив, а не создавать реставрацию.
+void cycle_moving(double *arr, int size, int k){
+    if (size < 2 || k == 0) {
+        return;
+    }
+    k %= size;
+    double temp[MAX_SHIFT];
+        if (k > MAX_SHIFT) {
+            cerr << "Ошибка: k > MAX_SHIFT (" << MAX_SHIFT << ")" << endl;
+            return;
+        }
+        for(int i = 0; i < k; i++){
+            temp[i] = arr[size - k + i];
+        }
+        for (int i = size - 1; i >= k; i--){
+            arr[i] = arr[i-k];
+        }
+        for (int i = 0; i < k; i++){
+            arr[i] = temp[i];
+        }
+    cout<<"Массив, сдвинутый на "<<k<<" позиций вправо"<<endl;
+    for (int i = 0; i < size; i++){
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    }
+int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
 
@@ -98,8 +129,9 @@ int main(){
     if (size > 3) {
         find_local_extr(my_array, size);
     }
-    double* norm_arr = new double[size];
+    double *norm_arr = new double[size];
     normalize(my_array, norm_arr, size);
     delete[] norm_arr;
-return 0;
+    cycle_moving(my_array, size, 5);
+    return 0;
 }
