@@ -52,6 +52,41 @@ void find_local_extr(const double *arr, int size){
         }
     }
 }
+//Функция нормализации последовательности
+//Преобразуйте последовательность таким образом,
+// чтобы все ее значения оказались в диапазоне от 0 до 1.
+// Для этого используйте формулу: normalized = (x - min) / (max - min),
+// где min и max — минимальное и максимальное значения исходной последовательности.
+// Исходная последовательность должна остаться неизменной,
+// результат запишите в новый массив.
+
+void normalize(double *arr, double *norm_arr, int size){
+    if (size <= 1) {
+        cout << "Недостаточно элементов" << endl;
+        return;
+    }
+
+    double min_val = arr[0];
+    double max_val = arr[0];
+
+    for (int i = 1; i < size; i++) {
+        if (arr[i] < min_val) min_val = arr[i];
+        if (arr[i] > max_val) max_val = arr[i];
+    }
+
+    if (max_val == min_val) {
+        cout << "Все элементы одинаковые, нормализация невозможна" << endl;
+        return;
+    }
+    for (int i = 0; i < size; i++){
+        norm_arr[i] = (arr[i] - min_val) / (max_val - min_val);
+    }
+    cout << "\nНормализованный массив:" << endl;
+    for (int i = 0; i < size; i++) {
+        cout << norm_arr[i] << " ";
+    }
+    cout << endl;
+}
 
 int main(){
     SetConsoleOutputCP(CP_UTF8);
@@ -63,5 +98,8 @@ int main(){
     if (size > 3) {
         find_local_extr(my_array, size);
     }
+    double* norm_arr = new double[size];
+    normalize(my_array, norm_arr, size);
+    delete[] norm_arr;
 return 0;
 }
