@@ -98,20 +98,20 @@ void cycle_moving(double *arr, int size, int k){
     if (size < 2 || k == 0) {
         return;
     }
-    k %= size;
-    double temp[MAX_SHIFT];
+    k %= size; // нормализация к
+    double temp[MAX_SHIFT]; //Буффер обмена для последних элементов, чтобы потом записать начало
         if (k > MAX_SHIFT) {
             cerr << "Ошибка: k > MAX_SHIFT (" << MAX_SHIFT << ")" << endl;
             return;
         }
         for(int i = 0; i < k; i++){
-            temp[i] = arr[size - k + i];
+            temp[i] = arr[size - k + i]; //Последние к элементов в буффер обмена
         }
         for (int i = size - 1; i >= k; i--){
-            arr[i] = arr[i-k];
+            arr[i] = arr[i-k]; //Замена элементов местами
         }
         for (int i = 0; i < k; i++){
-            arr[i] = temp[i];
+            arr[i] = temp[i]; //Вставка последних к элементов в начало
         }
     cout<<"Массив, сдвинутый на "<<k<<" позиций вправо"<<endl;
     for (int i = 0; i < size; i++){
