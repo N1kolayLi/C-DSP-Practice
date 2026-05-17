@@ -19,11 +19,13 @@ void func_arr(double* arr){
 
     srand(time(NULL));
 
+    cout << "Введите элементы массива:" << endl;
     for(int i = 0; i < n; i++) {
-        arr[i] = (rand() % 201) - 100;
+        cout << "Элемент " << i << " = ";
+        scanf("%lf", &arr[i]);
     }
 
-    cout << "\nСгенерированный массив:" << endl;
+    cout << "Массив: " << endl;
     for(int i = 0; i < n; i++) {
         cout << arr[i] << " ";
     }
@@ -94,6 +96,7 @@ void normalize(double *arr, double *norm_arr, int size){
 //Выполните циклический переход последовательности вправо на K позиций (K задается параметром).
 // При изменении элементов, выходящих за пределы массива, перемещаются в начало.
 // Предложение должно изменить исходный массив, а не создавать реставрацию.
+
 void cycle_moving(double *arr, int size, int k){
     if (size < 2 || k == 0) {
         return;
@@ -118,7 +121,46 @@ void cycle_moving(double *arr, int size, int k){
         cout << arr[i] << " ";
     }
     cout << endl;
+    //Из последовательности необходимо удалить все повторяющиеся элементы, оставив только первое вхождение каждого значения. Результат должен быть компактно сохранен в том же массиве (in-place), а новая длина последовательности возвращена из функции.
+}
+
+//Функция удаления дубликатов
+//последовательности необходимо удалить все повторяющиеся элементы,
+//оставив только первое вхождение каждого значения.
+//Результат должен быть компактно сохранен в том же массиве (in-place),
+//а новая длина последовательности возвращена из функции.
+
+int del_dubl(double *arr, int size){
+    if (size <= 1) {
+        return size;
     }
+
+    int new_size = 1;
+    for(int i = 1; i < size; i++){
+        bool is_duble = false;
+
+        for(int j = 0; j < new_size; j++){
+            if(arr[i] == arr[j]){
+                is_duble = true;
+                break;
+            }
+        }
+        if(!is_duble){
+            arr[new_size] = arr[i];
+            new_size++;
+        }
+    }
+    cout<<"Массив без дубликатов: "<<endl;
+    for(int i = 0; i < new_size; i++){
+        cout << arr[i] << " ";
+    }
+
+    cout<<"new_size ="<<new_size<<endl;
+    return new_size;
+
+}
+
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -133,5 +175,7 @@ int main() {
     normalize(my_array, norm_arr, size);
     delete[] norm_arr;
     cycle_moving(my_array, size, 5);
+    del_dubl(my_array, size);
+
     return 0;
 }
